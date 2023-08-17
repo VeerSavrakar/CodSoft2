@@ -1,0 +1,76 @@
+{% extends 'courses/base.html' %}
+{% load static %}
+{% block content %}
+<div class="containeri" id="heee">
+    {% comment %} {{vedio.vidio_id}} {% endcomment %}
+    <div class="row">
+        <div class="col">
+            <div class="iframe-container">
+                <iframe src="https://www.youtube.com/embed/{{vedio.vidio_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+        </div>
+        
+        <div class="col-3">
+            <div class="video-list-container">
+                <ul id='vedio_list' class="list-group">
+                    {% for vedio in vedios %}
+                    <li class="list-group-item {% if vedio.name|length > videoHeight %}scrollable{% endif %}">
+                        <a class="vedio-name" href="?lecture={{ vedio.serial_number }}">{{vedio}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% comment %} Courses detail's {% endcomment %}
+        <div class="mt-3">
+            <!-- card_template.html -->
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>{{ course.name }}</h2>
+                </div>
+                <div class="card-body">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia molestiae nobis sed aliquid, dolorem at quas error culpa odit tempora mollitia, aliquam modi numquam, deleniti minus aperiam ullam neque sapiente.</p>
+                    <p><strong>{{ course.discription }}</strong></p> 
+                    {% comment %} <p><strong>Occupation:</strong> {{ person.occupation }}</p> {% endcomment %} 
+                </div>
+            </div>
+        </div>
+        <div class="mt-3">
+            <!-- card_template.html -->
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>Prerequisite Required:</h2>
+                </div>
+                <div class="card-body">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia molestiae nobis sed aliquid, dolorem at quas error culpa odit tempora mollitia, aliquam modi numquam, deleniti minus aperiam ullam neque sapiente.</p>
+                    <p class="card-text">
+                        {% for pre in course.prerequisite_set.all%}
+                        
+                        <li><strong>{{pre.discription}}</strong></li>
+                        
+                        {% endfor %}
+                    </p>
+            </div>
+        </div>
+        <div class="mt-3">
+            <!-- card_template.html -->
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Learning Material:</h5>
+                    <p class="card-text">
+                        {% for pre in course.learning_set.all%}
+                        <ol>
+                        <li>{{pre.discription}}</li>
+                        </ol>
+                        {% endfor %}
+                    </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="{% static 'courses/js/basic.js' %}"></script>
+{% endblock %}

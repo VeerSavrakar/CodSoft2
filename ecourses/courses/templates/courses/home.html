@@ -1,0 +1,43 @@
+{% extends 'courses/base.html' %}
+{% load course_custom_tags %} 
+{% load static %}
+{% block content %}
+    <div class="container mt-4" id="heee">
+        <div class="row">
+            {% for item in courses %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ item.thumbnail.url }}" class="card-img-top" alt="{{ item.name }}" style="max-width: 200px; height: 150px;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        <p class="card-text m-0 p-0">
+                            <p> Save {{ item.discount }}%</p>
+                            <p class="price"><del>{{ item.price|rupee }}</del>
+                                &nbsp;
+                                <span> {% calculate_total_price item.price item.discount as value %}{{ value|rupee }}</span></p>
+                        </p>
+                    </div>
+                    <div class="card-footer p-0">
+                        {% is_enrolled request item  as enrolled %}
+
+                        {% if enrolled %}
+                        <div class="col border-right-1">
+                            <a class="btn btn-light btn-block" href="/course/{{ item.slug }}">Start Course</a>
+                        </div>
+                        {% else %}
+                        <div class="row">
+                            <div class="col border-right-1">
+                                <a class="btn btn-light btn-block" href="/check-out/{{item.slug}}">Enroll Now</a>
+                            </div>
+                            <div class="col border-left-1">
+                                <a class="btn btn-light btn-block" href="/course/{{ item.slug }}">Show More</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

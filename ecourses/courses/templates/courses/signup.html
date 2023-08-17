@@ -1,0 +1,16 @@
+{% extends 'courses/base.html' %}
+{% load course_custom_tags %} 
+{% load bootstrap3 %}
+{% block title %}
+Signup
+{% endblock %}
+{% block content %}
+<div class='container' id="heee">
+    <form method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" value="SignUp" class="btn btn-primary">
+    </form>
+</div>
+
+{% endblock%}

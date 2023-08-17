@@ -1,0 +1,70 @@
+{% extends 'courses/base.html' %}
+{% load course_custom_tags %} 
+{% load bootstrap3 %}
+{% block title %}
+CHECK-OUT
+{% endblock %}
+{% block content %}
+<div class="container" id="heee">
+    
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-5 mb-4">
+            <div class="card"style="height:300px;width:250px">
+                <img src="{{ course.thumbnail.url }}" class="card-img-top" alt="{{ item.name }}" style="max-width: 200px; height: 150px;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ course.name }}</h5>
+                    <p class="card-text m-0 p-0">
+                        <p> Save {{ course.discount }}%</p>
+                        <p class="price"><del>{{ course.price|rupee }}</del>
+                            &nbsp;
+                            <span> {% calculate_total_price course.price course.discount as value %}{{ value|rupee }}</span></p>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 mb-4">
+            <div class="checkout-details ">
+                <div class="card-body">
+                    <h2 class="card-title">Checkout Summary</h2>
+                    <p>Course: {{ course.name }}</p>
+                    <p>Payable Amount: {{ value|rupee }}</p>
+                    <a class="btn btn-light border" href="?action=create_payment">Continue to payment</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% if order is not None%}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+var options = {
+    "key": "rzp_test_y90krNyeQPoxaY", // Enter the Key ID generated from the Dashboard
+     // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    
+    "name": "ecourses", //your business name
+    "description": "Payment For{{course.name}}",
+    "image": "https://lessonpros.com/wp-content/uploads/2017/11/ecourses-logo-1.png",
+    "order_id": "{{order.id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "callback_url": "http://127.0.0.1:8000/verify_payment",
+    "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
+        "name": "{{request.user.username}}", //your customer's name
+        "email": "{{request.user.email}}",
+     //Provide the customer's phone number for better conversion rates 
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.open(); 
+</script>
+{% endif%}
+{% if error is not None%}
+<script>
+    window.onload=()=>{
+        alert('{{error}}')
+    }
+</script>
+{% endif %}
+{% endblock %}

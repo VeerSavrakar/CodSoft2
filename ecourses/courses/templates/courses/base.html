@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% load bootstrap3 %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'courses/css/m.css' %}">
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js" crossorigin="anonymous"></script>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/"
+            }
+        }
+    </script>
+    <title>Stylish White Nav Bar</title>
+    <style>
+        /* Custom styles */
+       
+
+        .navbar-brand {
+            
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            
+        }
+
+        .navbar-nav .nav-link:hover {
+            
+        }
+
+        /* Additional styles for the upper navbar */
+        .upper-navbar {
+            background-color: transparent;
+            
+            padding: 10px 0;
+        }
+
+        .upper-navbar a {
+            
+            margin-right: 20px;
+            text-decoration: none;
+        }
+
+        .upper-navbar{
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Add some styles to the container */
+        #heee {
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            margin-top: 20px;
+            box-shadow: 0 0 10px lightpink;
+            
+        }
+        
+       
+    </style>
+</head>
+<body class="loader">
+
+    <nav class="navbar">
+        <a class="navbar-brand" href="{% url 'courses:home' %}">Ecourses</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="upper-navbar">
+            <div class="container" style="background-color: transparent;">
+                <div class="row justify-content-end">
+                    <div class="col-auto">
+                        <a href="{% url 'courses:home' %}">Home</a>
+                        {% if user.is_authenticated %}
+                        <a href="/logout">Logout</a>
+                        {% else %}
+                        <a href="/signup">Signup</a>
+                        <a href="/login"><i class="fas fa-user"></i></a>
+                        {% endif%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" id="heee">
+        {% block content%}
+        {% endblock %}
+    </div>
+</body>
+<script src="{% static 'courses/js/basic.js' %}"></script>
+</html>
